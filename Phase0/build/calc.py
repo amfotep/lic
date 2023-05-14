@@ -19,24 +19,19 @@ def strip_str(data):
         n+= i
     return n
 
-
-def get_literals(input):
-    literals = []
-    for i in input:
-        if ord(i) in range(97, 123) and i not in literals:
-            literals.append(i)
-    return literals
-
 def modify_and_count(input):
+    literals=[]
     count_rec=-1
     new_input=""
     data = strip_str(input)
-    literals = get_literals(data)
 
     for i in data:
         count_rec+=1
         
         new_input+=i
+
+        if ord(i) in range(97, 123) and i not in literals:
+            literals.append(i)
 
         if data[count_rec] in ["(", "!"]:
             continue
@@ -45,7 +40,9 @@ def modify_and_count(input):
             if data[count_rec] != "+":
                 new_input+="*"
                 continue
-            
+        
+
+    
     return [literals, new_input]
        
 
@@ -67,3 +64,30 @@ def lexer(input):
             return None
     
     return tokens
+    
+
+
+def true_table():
+    for i in range(0, 16):
+        term = str(bin(i))[2:]
+        term = ("0"*(4-len(term)))+term 
+        print(term)
+    
+
+def main():
+    state = ""
+    while True:
+        print("> ")
+        state = input()
+
+        if state == "s":
+            break
+
+        print(lexer(state))
+        #print(lexer("!ab!c+abc+!a!bc+!a!b!c"))
+        #print(lexer("(!a+!b+c)(a+b+c)"))
+            
+
+
+true_table()
+#main()
